@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
+/// Not Currently in Use!!!
 /// Abstract Template for Data Container Objects
 /// Holds Generic Data which is read-only
 /// </summary>

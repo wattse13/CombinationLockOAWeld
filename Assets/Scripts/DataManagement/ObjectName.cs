@@ -15,10 +15,10 @@ using UnityEngine;
 
 public class ObjectName : MonoBehaviour
 {
-    [SerializeField] private DataNameSO thisObjectName;
-    [SerializeField] private List<DataNameSO> possibleNames = new List<DataNameSO>();
+    [SerializeField] private DataStringSO thisObjectName;
+    [SerializeField] private List<DataStringSO> possibleNames = new List<DataStringSO>();
 
-    private Dictionary<string, DataNameSO> dictName = new Dictionary<string, DataNameSO>();
+    private Dictionary<string, DataStringSO> dictName = new Dictionary<string, DataStringSO>();
 
     // ToolTipComponent is subscribed to OnSentHovered
     // ClickMenuComponent is subscribed to OnSentClicked
@@ -33,6 +33,8 @@ public class ObjectName : MonoBehaviour
         dictName.Add("stateTwo", possibleNames[1]);
         dictName.Add("stateThree", possibleNames[2]);
         dictName.Add("stateFour", possibleNames[3]);
+
+        // Debug.Log(thisObjectName.ObjectStringData);
     }
 
     private void OnEnable()
@@ -62,7 +64,7 @@ public class ObjectName : MonoBehaviour
         // Does this need another null check?
         if (myObject.TryGetComponent(out ObjectName name))
         {
-            OnSentHovered?.Invoke(name.thisObjectName.Data);
+            // OnSentHovered?.Invoke(name.thisObjectName.Data);
         }
     }
 
@@ -73,7 +75,7 @@ public class ObjectName : MonoBehaviour
         // Does this need another null check?
         if (myObject.TryGetComponent(out ObjectName name))
         {
-            OnSentClicked?.Invoke(name.thisObjectName.Data);
+            // OnSentClicked?.Invoke(name.thisObjectName.Data);
         }
     }
 
