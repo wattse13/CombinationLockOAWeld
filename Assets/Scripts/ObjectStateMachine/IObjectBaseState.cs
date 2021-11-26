@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class ObjectBaseState
+public abstract class IObjectBaseState
 {
     public abstract void EnterState(ObjectStateManager interactable);
     public abstract void UpdateState(ObjectStateManager interactable); // Should this be broken up?

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectStateManager : MonoBehaviour
 {
-    ObjectBaseState currentState;
+    IObjectBaseState currentState;
 
     // Should these be static? Currently creates four new states for every object. Probably not a big deal for projects of this scope
     // Also not sure if these should be public
@@ -22,10 +22,30 @@ public class ObjectStateManager : MonoBehaviour
 
     void Update()
     {
-        
+        // This is meant for testing purposes
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            currentState = unsafeOnState;
+            currentState.EnterState(this);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            currentState = unsafeOffState;
+            currentState.EnterState(this);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            currentState = safeOnState;
+            currentState.EnterState(this);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            currentState = safeOffState;
+            currentState.EnterState(this);
+        }
     }
 
-    public void SwitchState(ObjectBaseState state)
+    public void SwitchState(IObjectBaseState state)
     {
         currentState = state;
         state.EnterState(this);

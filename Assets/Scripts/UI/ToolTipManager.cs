@@ -3,51 +3,63 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-// Attatched to ToolTipManager GameObject in UI Scene
-// Changes ToolTip Text based on string recieved from delegate hover event
-// Flips ToolTip Pivot based on mouse location
+/// <summary>
+/// Attatched to ToolTipManager GameObject in UI Scene
+/// Changes ToolTip Text based on string recieved from delegate hover event
+/// Still needs method for keeping tooltip on screen for edge scenarios 
+/// </summary>
+
 public class ToolTipManager : MonoBehaviour
 {
+    [SerializeField] private RectTransform canvasRectTransform;
+    [SerializeField] private GameObject toolTipPanel;
+
     private TMP_Text toolTipContent;
     private RectTransform toolTipTransform;
-    private string toolTipText;
 
-    [SerializeField]
-    private GameObject toolTipPanel;
+    private void Awake()
+    {
+        toolTipContent = GameObject.Find("ToolTipText").GetComponent<TMP_Text>();
+        toolTipTransform = GameObject.Find("ToolTipBox").GetComponent<RectTransform>();
+        toolTipPanel.SetActive(false);
+    }
 
     private void OnEnable()
     {
-        // Subscribe to Hover event on Objects
+        ObjectName.OnSentHovered += SetAndShowText;
+        ToolTipComponent.OnHoverExited += HideToolTip;
     }
 
     private void OnDisable()
     {
-        // DeSubscribe from Hover event on Objects
+        ObjectName.OnSentHovered -= SetAndShowText;
+        ToolTipComponent.OnHoverExited -= HideToolTip;
     }
 
-    private void Start()
+    private void Update()
     {
-        toolTipContent = GameObject.Find("ToolTipText").GetComponent<TMP_Text>();
-        toolTipPanel.SetActive(false);
-        // toolTipContent.text = "Hi There!";
+        SetToolTipPosition();
     }
-    
+
     // Called when delegate event is triggered
-    private void SetAndShowText(string toolTipText)
+    private void SetAndShowText(string stringData)
     {
         toolTipPanel.SetActive(true);
-        toolTipContent.text = toolTipText;
+        toolTipContent.text = stringData;
     }
 
+    // Called when delegate event is triggered
     private void HideToolTip()
     {
         toolTipPanel.SetActive(false);
+        toolTipContent.text = null;
     }
 
-    private void FlipPanelPivot()
+    private void SetToolTipPosition()
     {
-        // Get Mouse Location
-        // If Mouse is on right side of screen, flip pivot point
-        // If Mouse is on Left side of screen, flip pivot point
+        Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+        toolTipTransform.anchoredPosition3D = anchoredPosition;
+
+        // Still needs method of keeping tooltip on screen for edge cases
     }
 }
