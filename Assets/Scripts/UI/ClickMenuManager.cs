@@ -6,6 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Attached to ClickMenuManager in UI Scene
 /// Should Display Data Sent by Object
+/// Needs Way to Recieve DataStringSO Dynamically?
 /// </summary>
 
 public class ClickMenuManager : MonoBehaviour
